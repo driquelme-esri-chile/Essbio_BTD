@@ -1,0 +1,77 @@
+http://localhost/WSESBIO/Sincronizacion.asmx?op=TraeObraPropios
+
+POST /WSESBIO/Sincronizacion.asmx HTTP/1.1
+Host: localhost
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://tempuri.org/TraeObraPropios"
+
+Entrada
+-------
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <TraeObraPropios xmlns="http://tempuri.org/">
+      <entity>
+        <NumeroContrato>string</NumeroContrato>
+        <Capex>string</Capex>
+        <AreaId>int</AreaId>
+        <RegionId>int</RegionId>
+        <Comuna>string</Comuna>
+        <Localidad>string</Localidad>
+        <Zonal>string</Zonal>
+        <FechaActa>dateTime</FechaActa>
+        <NombreObra>string</NombreObra>
+        <Infraestructura>string</Infraestructura>
+        <Constructora>string</Constructora>
+        <FechaEntradaOperacion>dateTime</FechaEntradaOperacion>
+        <Administrador>string</Administrador>
+        <LinkBTD>string</LinkBTD>
+      </entity>
+    </TraeObraPropios>
+  </soap:Body>
+</soap:Envelope>
+
+Ejemplo:
+--------
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <TraeObraPropios xmlns="http://tempuri.org/">
+      <entity>
+        <NumeroContrato>ABC123</NumeroContrato>
+        <Capex>CAP1</Capex>
+        <AreaId>1</AreaId>
+        <RegionId>1</RegionId>
+        <Comuna>1</Comuna>
+        <Localidad>2</Localidad>
+        <Zonal>1</Zonal>
+        <FechaActa>2021-12-12</FechaActa>
+        <NombreObra>Nombre1</NombreObra>
+        <Infraestructura>1</Infraestructura>
+        <Constructora>1</Constructora>
+        <FechaEntradaOperacion>2021-11-11</FechaEntradaOperacion>
+        <Administrador>Admin1</Administrador>
+        <LinkBTD>Link1</LinkBTD>
+      </entity>
+    </TraeObraPropios>
+  </soap:Body>
+</soap:Envelope>
+
+
+
+
+
+Salida/Respuesta (TraeObraTercerosResult es correcto cuando responde vacio "", sino error y el mensaje )
+----------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <TraeObraPropiosResponse xmlns="http://tempuri.org/">
+      <TraeObraPropiosResult>string</TraeObraPropiosResult>
+    </TraeObraPropiosResponse>
+  </soap:Body>
+</soap:Envelope>

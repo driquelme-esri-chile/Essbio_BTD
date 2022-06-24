@@ -1,0 +1,260 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Query | Sample | ArcGIS API for JavaScript 4.23</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .panel-side {
+            padding: 2px;
+            width: 390px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 60;
+            background-color: aliceblue;
+        }
+
+        .incomeList {
+            width: 100%;
+        }
+
+    </style>
+
+    <script
+    type="module"
+    src="https://js.arcgis.com/calcite-components/1.0.0-beta.79/calcite.esm.js"
+    ></script>
+    <script
+    nomodule=""
+    src="https://js.arcgis.com/calcite-components/1.0.0-beta.79/calcite.js"
+    ></script>
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://js.arcgis.com/calcite-components/1.0.0-beta.79/calcite.css"
+    />
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], (
+        Map,
+        MapView,
+        FeatureLayer
+      ) =>
+        (async () => {
+
+                    const map = new Map({
+                        basemap: "topo-vector"
+                    });
+
+                    const view = new MapView({
+                        container: "viewDiv",
+                        map: map,
+                        padding: {
+                        right: 390
+                        },
+                        center: [-98, 38],
+                        zoom: 4
+                    });
+
+                    const featureLayer = new FeatureLayer({
+                        url: "https://sigdesa.essbio.cl/server/rest/services/BTD/BTD/FeatureServer/7",
+                        outFields: ["*"]
+                    });
+                    const featureLayer2 = new FeatureLayer({
+                        url: "https://sigdesa.essbio.cl/server/rest/services/BTD/BTD/FeatureServer/2",
+                        outFields: ["*"]
+                    });
+                    const featureLayer3 = new FeatureLayer({
+                        url: "https://sigdesa.essbio.cl/server/rest/services/BTD/BTD/FeatureServer/4",
+                        outFields: ["*"]
+                    });
+                    const featureLayer4 = new FeatureLayer({
+                        url: "https://sigdesa.essbio.cl/server/rest/services/BTD/BTD/FeatureServer/8",
+                        outFields: ["*"]
+                    });
+                    //map.add(featureLayer);
+
+                    let graphics;
+                    let start = 0;
+
+
+                    queryPage1(0);
+
+                    function queryPage1(page) {
+
+                        const query = {
+                        start: page,
+                        num: 200000,
+                        where: "1=1",
+                        outFields: "*"
+                        };
+                        const promise = featureLayer
+                        .queryFeatures(query)
+                        .then((featureSet) => convertFeatureSetToRows(featureSet, query));
+                        const promise2 = featureLayer2
+                        .queryFeatures(query)
+                        .then((featureSet2) => convertFeatureSetToRows2(featureSet2, query));
+                        const promise3 = featureLayer3
+                        .queryFeatures(query)
+                        .then((featureSet3) => convertFeatureSetToRows3(featureSet3, query));
+                        const promise4 = featureLayer4
+                        .queryFeatures(query)
+                        .then((featureSet4) => convertFeatureSetToRows4(featureSet4, query));
+                    }
+
+                    function convertFeatureSetToRows(featureSet, query) {
+                        document.getElementById("incomeList1").innerHTML = "";
+
+                        graphics = featureSet.features;
+                        graphics.forEach((result, index) => {
+                            const attributes = result.attributes;
+                            const name = attributes.nombre;
+                            const data = attributes.codigo;
+
+                            const item = document.createElement("option");
+                            item.setAttribute("type", "input");
+                            item.setAttribute("value", name);
+                            item.setAttribute("data", data);
+                            item.innerHTML = name;
+                            document.getElementById("incomeList1").appendChild(item);
+                        });
+                        
+
+                    }
+
+                    function convertFeatureSetToRows2(featureSet2, query) {
+                        document.getElementById("incomeList2").innerHTML = "";
+
+                        graphics = featureSet2.features;
+                        graphics.forEach((result, index) => {
+                        const attributes = result.attributes;
+                        const name = attributes.nombre;
+                        const data = attributes.codigo;
+
+                        const item = document.createElement("option");
+                        item.setAttribute("type", "input");
+                        item.setAttribute("value", name);
+                        item.setAttribute("data", data);
+                        item.innerHTML = name;
+                        document.getElementById("incomeList2").appendChild(item);
+                        });
+
+                    }
+
+                    function convertFeatureSetToRows3(featureSet3, query) {
+                        document.getElementById("incomeList3").innerHTML = "";
+
+                        graphics = featureSet3.features;
+                        graphics.forEach((result, index) => {
+                        const attributes = result.attributes;
+                        const name = attributes.nombre;
+                        const data = attributes.codigo;
+
+                        const item = document.createElement("option");
+                        item.setAttribute("type", "input");
+                        item.setAttribute("value", name);
+                        item.setAttribute("data", data);
+                        item.innerHTML = name;
+                        document.getElementById("incomeList3").appendChild(item);
+                        });
+
+                    }
+
+                    function convertFeatureSetToRows4(featureSet4, query) {
+                        document.getElementById("incomeList4").innerHTML = "";
+
+                        graphics = featureSet4.features;
+                        graphics.forEach((result, index) => {
+                        const attributes = result.attributes;
+                        const name = attributes.nombre;
+                        const data = attributes.codigo;
+
+                        const item = document.createElement("option");
+                        item.setAttribute("type", "input");
+                        item.setAttribute("value", name);
+                        item.setAttribute("data", data);
+                        item.innerHTML = name;
+                        document.getElementById("incomeList4").appendChild(item);
+                        });
+
+                    }
+                    
+                })());
+
+
+
+    </script>
+
+
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+    
+    <calcite-action
+        id="toggle-button"
+        text="Toggle results panel"
+        title="Collapse results panel"
+        icon="chevrons-left"
+        scale="s"
+    >
+    </calcite-action>
+    <div class="panel-side" id="result-panel">
+        <div slot="header-content" scale="s">
+            <h3 class="heading">
+            Obras Propias
+            </h3>
+            <p>Ingrese los datos</p>
+            <p></p>
+        </div>
+        <p></p>
+        <p>Tipo de Contrato</p>
+        <select class="incomeList"></select>
+        </br>
+        <p>Numero de Contrato</p>
+        <input class="incomeList"></input>
+        </br>
+        <p>Region</p>
+        <select class="incomeList" id="incomeList1" ></select>
+        </br>
+        <p>Comuna</p>
+        <select class="incomeList" id="incomeList2" ></select>
+        </br>
+        <p>Localidad</p>
+        <select class="incomeList" id="incomeList3" ></select>
+        </br>
+        <p>Zonal</p>
+        <select class="incomeList" id="incomeList4" ></select>
+        </br>
+        <p>Area</p>
+        <input type="text">
+        </br>
+        <p>CAPEX - PEP - CC</p>
+        <select class="incomeList">
+            <option value="CAPEX">CAPEX</option>
+            <option value="PEP">PEP</option>
+            <option value="CC">CC</option>
+        </select>
+        </br>
+        <p>Fecha</p>
+        <input type="date" name="date-obra" placeholder="Fecha">
+        </br>
+        <p>Nombre de Obra</p>
+        <textarea type="text" name="name-obra" placeholder="Nombre de la Obra"></textarea>
+    </div>
+  </body>
+</html>

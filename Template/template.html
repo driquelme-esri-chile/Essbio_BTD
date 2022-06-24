@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú lateral responsive - MagtimusPro</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/dark/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+
+    <script src="https://js.arcgis.com/4.16/"></script>
+    <script>
+        //Cargando librerias generales
+        
+           require([
+                
+                "esri/Map",
+                "esri/WebScene",
+                "esri/views/SceneView",
+                "esri/layers/SceneLayer",
+                "esri/widgets/Search",
+                "esri/widgets/BasemapGallery",
+                "esri/widgets/LayerList",
+                "esri/widgets/DirectLineMeasurement3D",
+                "esri/widgets/AreaMeasurement3D",
+                "esri/widgets/Expand"
+              ],function( Map,
+                        WebScene, 
+                        SceneView, 
+                        SceneLayer,
+                        Search,
+                        BasemapGallery,
+                        LayerList, 
+                        AreaMeasurement3D, 
+                        Expand){
+        
+        //Cargando mapa y su visualizacion
+        
+                var map = new Map({
+                    basemap: "streets-navigation-vector",
+                    ground: "world-elevation",
+                
+                });
+        //cargando el contenedor HTML, Mapa, posicion y zoom del mapa 
+                var view = new SceneView({
+                    container: "viewDiv",
+                    map: map,
+                    camera: {
+                        position: [ -73.065129,-36.800883, 27000], //Position to view from
+                        tilt: 0,
+                        heading:0
+                    }
+                });
+        
+                
+        //Setenemos widget de busqueda 
+        
+                const searchWidget = new Search({
+                    view: view
+                });
+        
+        //Seteamos el Layer que usaremos
+        
+                //var sceneLayer = new SceneLayer({
+                //  url: "https://tiles.arcgis.com/tiles/oPre3pOfRfefL8y0/arcgis/rest/services/swissbuildings3D/SceneServer"
+                  //portalItem: {id: ""}
+                
+                //});
+        
+        //comenzamos a setear los Widgets
+        
+                var layerList = new LayerList({
+                    view: view,
+                });
+
+                var medirarea = new AreaMeasurement3D({
+                    view: view
+                });
+
+        
+        //Modificamos los Iconos de los Widgets
+        
+                var area1 = new Expand({
+                    view: view,
+                    content: medirarea,
+                    container:"areabtn1"
+                });
+
+                var area2 = new Expand({
+                    view: view,
+                    content: medirarea,
+                    container:"areabtn2"
+                });
+
+        
+        
+        //Incluimos los Layers y widgets al mapa 
+                view.ui.add(searchWidget, "top-right");
+                map.add(sceneLayer);
+                
+    
+
+
+              }); 
+          </script>
+  
+</head>
+<body id="body">
+    <div class="menu__side" id="menu_side">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-inner">
+                <div class="carousel-item" data-bs-interval="100000000000">
+                    <div class="options__menu" id="menu_obra1">	
+                        <form action="/" id="formulario">
+                            <div class="title">
+                                <p>Obras propias</p><button id="cont_btns4" class="cont_btns3" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1">X</button>
+                            </div>
+                            <div class="info">
+                                <p>Tipo de contrato</p>
+                                <select>
+                                    <option selected>Tipo de Contrato</option>
+                                </select>
+                                <p>Numero de Contrato</p>
+                                <input type="text" name="name" placeholder="Numero de Contrato">
+                                <p>Region</p>
+                                <select>
+                                    <option value="course-type" selected>Region</option>
+                                </select>
+                                <p>Comuna</p>
+                                <select>
+                                    <option value="course-type" selected>Comuna</option>
+                                </select>
+                                <p>Localidad</p>
+                                <select>
+                                    <option value="course-type" selected>Localidad</option>
+                                </select>
+                                <p>ZONAL</p>
+                                <select>
+                                    <option value="course-type" selected>ZONAL</option>
+                                </select>
+                                <p>AREA</p>
+                                <select>
+                                    <option value="course-type" selected>AREA</option>
+                                </select>
+                                <p>CAPEX,PEP,CC</p>
+                                <input type="text" name="name" placeholder="CAPEX,PEP,CC">
+                                <p>Fecha</p>
+                                <input type="date" name="name" placeholder="Fecha">
+                                <p>Nombre de la Obra</p>
+                                <textarea type="text" name="name" placeholder="Nombre de la Obra"></textarea>
+                            </div>
+                        </form>
+                        <p>Incluye poligono ?</p>
+                        <div id="areabtn1"></div>
+                        <button class="btn fas" type="submit" href="/" id="guardar">Guardar</button>
+                    </div>
+                </div>
+                <div class="carousel-item active" data-bs-interval="100000000000">
+                  <div id="menu" class="options__menu1">
+                        <h1>Tipo de Obra</h1>
+                        <button id="cont_btns3" class="cont_btns3" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0">
+                            <i >Obras Propias</i>
+                        </button>
+                        <button id="cont_btns4" class="cont_btns3" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2">
+                            <i >Obras de Terceros</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="100000000000">
+                    <div class="options__menu" id="menu_obra2">	
+                        <form action="/" id="formulario">
+                            <div class="title">
+                                <h2>Obras Terceros</h2>
+                                <button id="cont_btns4" class="cont_btns3" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1">X</button>
+                            </div>
+                            <div class="info">
+                                <p>Tipo de contrato</p>
+                                <select>
+                                    <option selected>Tipo de Contrato</option>
+                                </select>
+                                <p>Numero de Contrato</p>
+                                <input type="text" name="name" placeholder="Numero de Contrato">
+                                <p>Region</p>
+                                <select>
+                                    <option value="course-type" selected>Region</option>
+                                </select>
+                                <p>Comuna</p>
+                                <select>
+                                    <option value="course-type" selected>Comuna</option>
+                                </select>
+                                <p>Localidad</p>
+                                <select>
+                                    <option value="course-type" selected>Localidad</option>
+                                </select>
+                                <p>ZONAL</p>
+                                <select>
+                                    <option value="course-type" selected>ZONAL</option>
+                                </select>
+                                <p>AREA</p>
+                                <select>
+                                    <option value="course-type" selected>AREA</option>
+                                </select>
+                                <p>CAPEX,PEP,CC</p>
+                                <input type="text" name="name" placeholder="CAPEX,PEP,CC">
+                                <p>Fecha</p>
+                                <input type="date" name="name" placeholder="Fecha">
+                                <p>Nombre de la Obra</p>
+                                <textarea type="text" name="name" placeholder="Nombre de la Obra"></textarea>
+                            </div>
+                        </form>
+                        <p>Incluye poligono ?</p>
+                        <div id="areabtn2"></div>
+                        <button class="btn fas" type="submit" href="/" id="guardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="viewDiv"></div>
+    <div id="cont_vertical">
+        <div id="cont_fixed">
+            <div id="cont_general">
+                <div id="cont_title" class="cont_title">
+                    <h1>ESSBIO</h1>
+                </div>
+            </div>
+            <div id="contbtn">
+                <button id="cont_btns" class="cont_btns">
+                    <i class="fas" >Obras</i>
+                </button>
+            </div>
+        </div> 
+    </div>
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>  
+</body>
+</html>
